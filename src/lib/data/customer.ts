@@ -295,3 +295,90 @@ export const sendResetPasswordEmail = async (email: string) => {
 
   return res
 }
+
+export const authenticateWithPhone = async (phone: string) => {
+  try {
+    const response = await sdk.auth.login("customer", "phone-auth", {
+      phone,
+    })
+
+    if (
+      typeof response === "string" ||
+      !response.location ||
+      response.location !== "otp"
+    ) {
+      throw new Error("Failed to login")
+    }
+
+    return true
+  } catch (error: any) {
+    return error.toString()
+  }
+}
+
+export const verifyOtp = async ({
+  otp,
+  phone,
+}: {
+  otp: string
+  phone: string
+}) => {
+  try {
+    const token = await sdk.auth.callback("customer", "phone-auth", {
+      phone,
+      otp,
+    })
+
+    await setAuthToken(token)
+
+    const customerCacheTag = await getCacheTag("customers")
+    revalidateTag(customerCacheTag)
+
+    await transferCart()
+
+    return true
+  } catch (e: any) {
+    return e.toString()
+  }
+}
+
+export const registerWithPhone = async ({
+  firstName,
+  lastName,
+  phone,
+}: {
+  firstName: string
+  lastName: string
+  phone: string
+}) => {
+  try {
+    const { token: regToken } = await sdk.client.fetch<{ token: string }>(
+      `/auth/customer/phone-auth/register`,
+      {
+        method: "POST",
+        body: {
+          phone,
+        },
+      }
+    )
+
+    await setAuthToken(regToken as string)
+    const headers = {
+      ...(await getAuthHeaders()),
+    }
+
+    const email = `${phone}@gmail.com`
+    const customerData = {
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      phone,
+    }
+
+    await sdk.store.customer.create(customerData, {}, headers)
+
+    return await authenticateWithPhone(phone)
+  } catch (error: any) {
+    return error.toString()
+  }
+}

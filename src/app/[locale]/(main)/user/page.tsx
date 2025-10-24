@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/molecules"
+import LoginForm from "@/components/molecules/LoginPhone/LoginForm"
 import { UserNavigation } from "@/components/molecules"
 import { retrieveCustomer } from "@/lib/data/customer"
 

@@ -1,4 +1,4 @@
-import { RegisterForm } from "@/components/molecules"
+import RegisterPhone from "@/components/molecules/RegisterPhone/RegisterPhone"
 import { retrieveCustomer } from "@/lib/data/customer"
 import { redirect } from "next/navigation"
 
@@ -9,5 +9,5 @@ export default async function Page() {
     redirect("/user")
   }
 
-  return <RegisterForm />
+  return <RegisterPhone />
 }
