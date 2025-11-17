@@ -1,5 +1,7 @@
 import { HomeProductsCarousel } from "@/components/organisms"
 import { Product } from "@/types/product"
+import { HttpTypes } from "@medusajs/types"
+import { SellerProps } from "@/types/seller"
 
 export const HomeProductSection = async ({
   // heading,
@@ -9,14 +11,14 @@ export const HomeProductSection = async ({
 }: {
   // heading: string
   locale?: string
-  products?: Product[]
+  products?: Product[] | (HttpTypes.StoreProduct & { seller?: SellerProps })[]
   home?: boolean
 }) => {
   return (
     <section className="py-1 w-full">
       <HomeProductsCarousel
         locale={locale}
-        sellerProducts={products.slice(0, 4)}
+        sellerProducts={products.slice(0, 4) as any}
         home={home}
       />
     </section>

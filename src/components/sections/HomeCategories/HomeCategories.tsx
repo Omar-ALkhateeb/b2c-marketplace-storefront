@@ -37,21 +37,21 @@ export const categories: (CategoryData & { icon: any })[] = [
   { id: 8, name: "Toys", handle: "toys", icon: faGamepad },
 ]
 
-// CategoryCard component
+// CategoryCard component - Mobile App Style
 const CategoryCard = ({ category }: { category: (typeof categories)[0] }) => {
   // IconComponent is now the Font Awesome icon object (e.g., faMugSaucer)
   const IconComponent = category.icon
 
   return (
     <Link href={`/categories/${category.handle}`} className="block">
-      <div className="flex flex-col items-center justify-center px-3 py-4 mx-2   hover:shadow-md transition-all duration-200 min-w-[80px]">
-        <div className="w-12 h-12 bg-kiddo-secondary/70 rounded-full flex items-center justify-center mb-3 border-2 border-kiddo-primary/20">
+      <div className="flex flex-col items-center justify-center px-2 py-3 mx-1.5 min-w-[70px] active:opacity-70 transition-opacity">
+        <div className="w-12 h-12 bg-gradient-to-br from-kiddo-secondary to-kiddo-accent/60 rounded-2xl flex items-center justify-center mb-2 shadow-sm">
           <FontAwesomeIcon
             icon={IconComponent}
             className="w-5 h-5 text-kiddo-dark"
           />
         </div>
-        <span className="text-xs font-medium text-center text-primary leading-tight">
+        <span className="text-[10px] font-medium text-center text-primary leading-tight">
           {category.name}
         </span>
       </div>
@@ -62,11 +62,13 @@ const CategoryCard = ({ category }: { category: (typeof categories)[0] }) => {
 // HomeCategories is a Client Component
 export const HomeCategories = ({ heading }: { heading: string }) => {
   return (
-    <section className="bg-primary py-6 w-full">
-      <div className="mb-4 px-6">
-        <h3 className="heading-md text-primary font-semibold">{heading}</h3>
-      </div>
-      <div className="px-4">
+    <section className="w-full">
+      {heading && (
+        <div className="mb-3 px-4">
+          <h2 className="text-base text-primary font-bold">{heading}</h2>
+        </div>
+      )}
+      <div className="px-2">
         <Carousel
           items={categories?.map((category) => (
             <CategoryCard key={category.id} category={category} />

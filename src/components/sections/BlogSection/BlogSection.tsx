@@ -33,13 +33,16 @@ export const blogPosts: BlogPost[] = [
 
 export function BlogSection() {
   return (
-    <section className='bg-primary px-6 py-8'>
-      <div className='mb-6'>
-        <h2 className='text-xl font-bold text-primary text-center'>
-          STAY UP TO DATE
+    <section className='bg-white px-4 py-4'>
+      <div className='mb-3'>
+        <h2 className='text-base font-bold text-primary'>
+          Style Tips
         </h2>
+        <p className='text-xs text-secondary mt-0.5'>
+          Latest trends and inspiration
+        </p>
       </div>
-      <div className='flex flex-col gap-4 max-w-md mx-auto'>
+      <div className='flex flex-col gap-3'>
         {blogPosts.map((post, index) => (
           <BlogCard
             key={post.id}

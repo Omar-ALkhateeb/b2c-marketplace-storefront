@@ -10,19 +10,23 @@ export const CartItems = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
 
   const groupedItems: any = groupItemsBySeller(cart)
 
-  return Object.keys(groupedItems).map((key) => (
-    <div key={key} className="mb-4">
-      <CartItemsHeader seller={groupedItems[key]?.seller} />
-      <CartItemsProducts
-        products={groupedItems[key].items || []}
-        currency_code={cart.currency_code}
-      />
-      <CartItemsFooter
-        currency_code={cart.currency_code}
-        price={cart.shipping_subtotal}
-      />
-    </div>
-  ))
+  return (
+    <>
+      {Object.keys(groupedItems).map((key) => (
+        <div key={key} className="bg-white rounded-2xl shadow-sm overflow-hidden mb-3">
+          <CartItemsHeader seller={groupedItems[key]?.seller} />
+          <CartItemsProducts
+            products={groupedItems[key].items || []}
+            currency_code={cart.currency_code}
+          />
+          <CartItemsFooter
+            currency_code={cart.currency_code}
+            price={cart.shipping_subtotal}
+          />
+        </div>
+      ))}
+    </>
+  )
 }
 
 function groupItemsBySeller(cart: HttpTypes.StoreCart) {

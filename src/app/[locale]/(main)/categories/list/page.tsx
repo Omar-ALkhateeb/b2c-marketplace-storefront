@@ -10,10 +10,14 @@ export default async function CategoriesPage() {
   console.log(categories)
 
   return (
-    <div className="min-h-screen pb-20">
-      <div className="p-4 border-b bg-background/95 backdrop-blur-sm sticky top-0 z-10">
-        <h1 className="text-2xl font-bold">Categories</h1>
+    <div className="min-h-screen pb-20 bg-gray-50">
+      {/* App-Style Header */}
+      <div className="px-4 pt-4 pb-3 bg-white border-b border-gray-100 sticky top-0 z-10 shadow-sm">
+        <h1 className="text-lg font-bold text-primary">All Categories</h1>
+        <p className="text-xs text-secondary mt-0.5">Browse everything we offer</p>
       </div>
+
+      {/* Categories List */}
       <CategoriesList categories={categories} />
     </div>
   )

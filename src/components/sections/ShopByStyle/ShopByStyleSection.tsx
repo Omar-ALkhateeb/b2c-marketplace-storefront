@@ -33,32 +33,36 @@ export const styles: Style[] = [
 
 export function ShopByStyleSection() {
   return (
-    <section className="bg-primary container">
-      <h2 className="heading-lg text-primary mb-12">SHOP BY STYLE</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-        <div className="py-[52px] px-[58px] h-full border rounded-sm">
+    <section className="bg-white rounded-2xl shadow-md overflow-hidden">
+      <div className="bg-gradient-to-r from-kiddo-accent to-kiddo-dark px-4 py-3">
+        <h2 className="text-base font-bold text-white">Shop by Style</h2>
+        <p className="text-[10px] text-white/90">Find your vibe</p>
+      </div>
+      <div className="p-3">
+        <div className="space-y-2">
           {styles.map((style) => (
             <LocalizedClientLink
               key={style.id}
               href={style.href}
-              className="group flex items-center gap-4 text-primary hover:text-action transition-colors border-b border-transparent hover:border-primary w-fit pb-2 mb-8"
+              className="group flex items-center justify-between px-3 py-2.5 text-primary active:text-white bg-gray-50 active:bg-gradient-to-r active:from-kiddo-accent active:to-kiddo-dark transition-all rounded-lg border border-gray-200 active:border-transparent"
             >
-              <span className="heading-lg">{style.name}</span>
-              <ArrowRightIcon className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              <span className="text-sm font-bold">{style.name}</span>
+              <ArrowRightIcon className="w-4 h-4 text-primary group-active:text-white" />
             </LocalizedClientLink>
           ))}
         </div>
-        <div className="relative hidden lg:block">
-          <Image
-            loading="lazy"
-            fetchPriority="high"
-            src="/images/shop-by-styles/Image.jpg"
-            alt="Models showcasing luxury fashion styles"
-            width={700}
-            height={600}
-            className="object-cover rounded-sm w-full h-auto"
-          />
-        </div>
+      </div>
+      <div className="relative h-[140px] overflow-hidden">
+        <Image
+          loading="lazy"
+          fetchPriority="high"
+          src="/images/shop-by-styles/Image.jpg"
+          alt="Models showcasing luxury fashion styles"
+          width={700}
+          height={600}
+          className="object-cover w-full h-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </div>
     </section>
   )

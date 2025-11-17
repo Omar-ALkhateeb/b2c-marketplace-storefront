@@ -11,18 +11,15 @@ export const CartItemsHeader = ({
 }) => {
   return (
     <LocalizedClientLink href={`/sellers/${seller.handle}`}>
-      <div className="border rounded-sm p-4 flex gap-4 items-center">
-        <SellerAvatar photo={seller.photo} size={32} alt={seller.name} />
+      <div className="bg-gray-50 px-4 py-3 flex gap-3 items-center border-b border-gray-100 active:bg-gray-100 transition-colors">
+        <SellerAvatar photo={seller.photo} size={28} alt={seller.name} />
 
-        <div className="lg:flex gap-2">
-          <p className="uppercase heading-xs">{seller.name}</p>
+        <div className="flex-1">
+          <p className="text-xs font-bold text-primary uppercase">{seller.name}</p>
           {seller.id !== "fleek" && (
-            <div className="flex items-center gap-2">
-              <Divider square />
-              <p className="label-md text-secondary">
-                Joined: {format(seller.created_at || "", "yyyy-MM-dd")}
-              </p>
-            </div>
+            <p className="text-[10px] text-secondary mt-0.5">
+              Joined {format(seller.created_at || "", "MMM yyyy")}
+            </p>
           )}
         </div>
       </div>

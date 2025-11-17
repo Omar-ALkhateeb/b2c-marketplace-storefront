@@ -2,9 +2,9 @@ import {
   BannerSection,
   BlogSection,
   Hero,
-  // HomeCategories,
-  // HomeProductSection,
-  // ShopByStyleSection,
+  HomeCategories,
+  HomeProductSection,
+  ShopByStyleSection,
 } from "@/components/sections"
 
 import type { Metadata } from "next"
@@ -12,6 +12,9 @@ import { headers } from "next/headers"
 import Script from "next/script"
 import { listRegions } from "@/lib/data/regions"
 import { toHreflang } from "@/lib/helpers/hreflang"
+import { listProducts } from "@/lib/data/products"
+import { HttpTypes } from "@medusajs/types"
+import { SellerProps } from "@/types/seller"
 // import { redirect } from "next/navigation"
 
 export async function generateMetadata({
@@ -119,13 +122,26 @@ export default async function Home({
   const protocol = headersList.get("x-forwarded-proto") || "https"
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`
 
+  // Fetch featured products for the homepage
+  let featuredProducts: (HttpTypes.StoreProduct & { seller?: SellerProps })[] = []
+  try {
+    const productsData = await listProducts({
+      pageParam: 1,
+      queryParams: { limit: 8 },
+      countryCode: locale,
+    })
+    featuredProducts = productsData.response.products
+  } catch (error) {
+    console.error("Error fetching products:", error)
+  }
+
   // redirect(`/${locale}/categories`)
   const siteName =
     process.env.NEXT_PUBLIC_SITE_NAME ||
     "Mercur B2C Demo - Marketplace Storefront"
 
   return (
-    <main className="flex flex-col pb-20 text-primary">
+    <main className="flex flex-col pb-20 bg-gray-50 min-h-screen">
       <link
         rel="preload"
         as="image"
@@ -162,14 +178,15 @@ export default async function Home({
         }}
       />
 
+      {/* Hero Section - Compact App Style */}
       <Hero
         image="/images/hero/Image.jpg"
-        heading="Snag your style in a flash"
-        paragraph="Buy, sell, and discover pre-loved gems from the trendiest brands."
+        heading="Discover Your Style"
+        paragraph="Shop trending fashion from top brands"
         buttons={[
-          { label: "Buy now", path: "/categories" },
+          { label: "Shop Now", path: "/categories" },
           {
-            label: "Sell now",
+            label: "Sell",
             path:
               process.env.NEXT_PUBLIC_ALGOLIA_ID === "UO3C5Y8NHX"
                 ? "https://vendor-sandbox.vercel.app/"
@@ -177,8 +194,63 @@ export default async function Home({
           },
         ]}
       />
-      <BannerSection />
-      <BlogSection />
+
+      {/* Categories Section - App Style */}
+      <div className="bg-white mt-2 pt-4 pb-3">
+        <div className="px-4 mb-3">
+          <h2 className="text-base font-bold text-primary">Categories</h2>
+        </div>
+        <HomeCategories heading="" />
+      </div>
+
+      {/* Featured Products Section - App Cards */}
+      {featuredProducts.length > 0 && (
+        <div className="mt-2 bg-white py-4">
+          <div className="px-4 mb-3">
+            <h2 className="text-base font-bold text-primary">Trending Now</h2>
+            <p className="text-xs text-secondary mt-0.5">
+              What's hot this season
+            </p>
+          </div>
+          <HomeProductSection
+            locale={locale}
+            products={featuredProducts}
+            home={true}
+          />
+        </div>
+      )}
+
+      {/* Shop by Style Section - Compact */}
+      <div className="mt-2 px-4 py-4">
+        <ShopByStyleSection />
+      </div>
+
+      {/* Featured Collection Banner - App Card */}
+      <div className="mt-2">
+        <BannerSection />
+      </div>
+
+      {/* New Arrivals Section */}
+      {featuredProducts.length > 4 && (
+        <div className="mt-2 bg-white py-4">
+          <div className="px-4 mb-3">
+            <h2 className="text-base font-bold text-primary">New Arrivals</h2>
+            <p className="text-xs text-secondary mt-0.5">
+              Fresh styles added daily
+            </p>
+          </div>
+          <HomeProductSection
+            locale={locale}
+            products={featuredProducts.slice(4)}
+            home={true}
+          />
+        </div>
+      )}
+
+      {/* Blog/Tips Section - Compact */}
+      <div className="mt-2">
+        <BlogSection />
+      </div>
     </main>
   )
 }

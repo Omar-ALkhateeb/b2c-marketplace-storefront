@@ -17,44 +17,44 @@ const CategoryItem = ({
     category.category_children && category.category_children.length > 0
 
   return (
-    <div className="border-b last:border-b-0">
+    <div>
       <div
-        className={`flex items-center justify-between p-4 hover:bg-muted/30 transition-colors ${
-          level > 0 ? `pl-${4 + level * 4}` : ""
+        className={`flex items-center justify-between active:bg-gray-100 transition-colors ${
+          level === 0 ? "bg-white" : "bg-gray-50"
         }`}
-        style={{ paddingLeft: level > 0 ? `${16 + level * 16}px` : "16px" }}
+        style={{ paddingLeft: level > 0 ? `${16 + level * 12}px` : "0px" }}
       >
-        <div className="flex-1">
-          <Link
-            href={`/categories/${category.handle}`}
-            className="block hover:text-primary transition-colors"
-          >
-            <h3 className="font-medium">{category.name}</h3>
-            {category.description && (
-              <p className="text-sm text-muted-foreground mt-1">
-                {category.description}
-              </p>
-            )}
-          </Link>
-        </div>
+        <Link
+          href={`/categories/${category.handle}`}
+          className="flex-1 py-3.5 px-4"
+        >
+          <h3 className={`font-semibold ${level === 0 ? "text-sm" : "text-xs"} text-primary`}>
+            {category.name}
+          </h3>
+          {category.description && level === 0 && (
+            <p className="text-xs text-secondary mt-0.5 line-clamp-1">
+              {category.description}
+            </p>
+          )}
+        </Link>
 
         {hasChildren && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="p-2 hover:bg-muted rounded-md transition-colors"
+            className="p-4 active:bg-gray-200 transition-colors"
             aria-label={isExpanded ? "Collapse" : "Expand"}
           >
             {isExpanded ? (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-4 w-4 text-secondary" />
             ) : (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 text-secondary" />
             )}
           </button>
         )}
       </div>
 
       {hasChildren && isExpanded && (
-        <div className="bg-muted/20">
+        <div className="bg-gray-50/50 border-l-2 border-kiddo-accent/30 ml-4">
           {category.category_children.map((childCategory) => (
             <CategoryItem
               key={childCategory.id}
@@ -64,6 +64,8 @@ const CategoryItem = ({
           ))}
         </div>
       )}
+
+      {level === 0 && <div className="h-[1px] bg-gray-100" />}
     </div>
   )
 }
@@ -74,16 +76,12 @@ export const CategoriesList = ({
   categories: HttpTypes.StoreProductCategory[]
 }) => {
   return (
-    <div className="p-4 space-y-6">
-      <div className="border rounded-lg overflow-hidden">
-        <div className="bg-muted/50 p-4 border-b">
-          <h2 className="font-semibold text-lg">Categories</h2>
-        </div>
-        <div>
-          {categories.map((category) => (
-            <CategoryItem key={category.id} category={category} />
-          ))}
-        </div>
+    <div className="mt-2">
+      {/* Main Categories Card */}
+      <div className="bg-white shadow-sm rounded-t-2xl overflow-hidden">
+        {categories.map((category) => (
+          <CategoryItem key={category.id} category={category} />
+        ))}
       </div>
     </div>
   )

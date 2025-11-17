@@ -14,6 +14,36 @@ import {
   setAuthToken,
 } from "./cookies"
 
+// Original version - commented out due to timeout issues
+// export const retrieveCustomer =
+//   async (): Promise<HttpTypes.StoreCustomer | null> => {
+//     const authHeaders = await getAuthHeaders()
+//
+//     if (!authHeaders) return null
+//
+//     const headers = {
+//       ...authHeaders,
+//     }
+//
+//     const next = {
+//       ...(await getCacheOptions("customers")),
+//     }
+//
+//     return await sdk.client
+//       .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
+//         method: "GET",
+//         query: {
+//           fields: "*orders",
+//         },
+//         headers,
+//         next,
+//         cache: "force-cache",
+//       })
+//       .then(({ customer }) => customer)
+//       .catch(() => null)
+//   }
+
+// New version with timeout and better error handling
 export const retrieveCustomer =
   async (): Promise<HttpTypes.StoreCustomer | null> => {
     const authHeaders = await getAuthHeaders()
@@ -28,18 +58,29 @@ export const retrieveCustomer =
       ...(await getCacheOptions("customers")),
     }
 
-    return await sdk.client
-      .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
-        method: "GET",
-        query: {
-          fields: "*orders",
-        },
-        headers,
-        next,
-        cache: "force-cache",
-      })
-      .then(({ customer }) => customer)
-      .catch(() => null)
+    try {
+      // Add a timeout to prevent indefinite hanging
+      const timeoutPromise = new Promise<null>((_, reject) =>
+        setTimeout(() => reject(new Error('Request timeout')), 5000)
+      )
+
+      const fetchPromise = sdk.client
+        .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
+          method: "GET",
+          query: {
+            fields: "*orders",
+          },
+          headers,
+          next,
+          cache: "no-store", // Changed from force-cache to avoid caching failures
+        })
+        .then(({ customer }) => customer)
+
+      return await Promise.race([fetchPromise, timeoutPromise])
+    } catch (error) {
+      console.warn('Failed to retrieve customer, continuing without user session:', error)
+      return null
+    }
   }
 
 export const updateCustomer = async (body: HttpTypes.StoreUpdateCustomer) => {

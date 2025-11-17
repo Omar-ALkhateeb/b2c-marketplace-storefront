@@ -8,13 +8,29 @@ export default async function UserPage() {
   if (!user) return <LoginForm />
 
   return (
-    <main className="container">
-      <div className="grid grid-cols-1 md:grid-cols-4 mt-6 gap-5 md:gap-8">
-        <UserNavigation />
-        <div className="md:col-span-3">
-          <h1 className="heading-xl uppercase">Welcome {user.first_name}</h1>
-          <p className="label-md">Your account is ready to go!</p>
+    <main className="min-h-screen bg-gray-50 pb-20">
+      {/* Profile Header Card */}
+      <div className="bg-gradient-to-br from-kiddo-accent to-kiddo-dark px-4 pt-6 pb-8">
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30">
+            <span className="text-2xl font-bold text-white">
+              {user.first_name?.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-white">
+              {user.first_name} {user.last_name}
+            </h1>
+            <p className="text-xs text-white/90 mt-0.5">
+              {user.email}
+            </p>
+          </div>
         </div>
+      </div>
+
+      {/* Navigation Menu */}
+      <div className="px-4 -mt-4">
+        <UserNavigation />
       </div>
     </main>
   )

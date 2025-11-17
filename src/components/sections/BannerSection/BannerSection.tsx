@@ -1,12 +1,13 @@
 import { Button } from "@/components/atoms"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import Image from "next/image"
+import { ArrowRightIcon } from "@/icons"
 
 export const BannerSection = () => {
   return (
-    <section className="bg-primary px-6 py-8">
-      <div className="flex flex-col gap-6 max-w-md mx-auto">
-        <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-md">
+    <section className="bg-white px-4 py-4">
+      <LocalizedClientLink href="/collections/boho" className="block">
+        <div className="relative w-full h-[200px] rounded-2xl overflow-hidden shadow-md active:opacity-90 transition-opacity">
           <Image
             loading="lazy"
             fetchPriority="high"
@@ -17,27 +18,26 @@ export const BannerSection = () => {
             className="object-cover object-top w-full h-full"
             sizes="100vw"
           />
-        </div>
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-neutral-100">
-          <div className="mb-6">
-            <span className="text-xs inline-block px-3 py-1 bg-kiddo-secondary text-kiddo-dark rounded-full font-medium border border-kiddo-primary/20">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+          {/* Overlay Content */}
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <span className="text-[10px] inline-block px-2.5 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full font-semibold border border-white/30 mb-2">
               #COLLECTION
             </span>
-            <h2 className="text-xl font-bold mt-3 mb-3 text-primary leading-tight">
-              BOHO VIBES: WHERE COMFORT MEETS CREATIVITY
+            <h2 className="text-lg font-bold mb-1.5 text-white leading-tight">
+              Boho Vibes
             </h2>
-            <p className="text-sm text-secondary leading-relaxed">
-              Discover boho styles that inspire adventure and embrace the beauty
-              of the unconventional.
+            <p className="text-xs text-white/90 mb-2.5 leading-snug line-clamp-2">
+              Discover styles that inspire adventure
             </p>
+            <div className="inline-flex items-center text-xs font-bold text-white">
+              <span>Explore</span>
+              <ArrowRightIcon className="ml-1" color="white" />
+            </div>
           </div>
-          <LocalizedClientLink href="/collections/boho">
-            <Button size="large" className="w-full bg-kiddo-accent hover:bg-kiddo-dark text-white font-medium">
-              EXPLORE
-            </Button>
-          </LocalizedClientLink>
         </div>
-      </div>
+      </LocalizedClientLink>
     </section>
   )
 }
