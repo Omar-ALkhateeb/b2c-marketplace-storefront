@@ -29,10 +29,10 @@ export const ProductCard = ({
   return (
     <div
       className={clsx(
-        "relative group  transition-all duration-200 flex flex-col justify-between bg-[#F9F9F9] rounded-xl"
+        "relative group transition-all duration-200 flex flex-col bg-[#F9F9F9] rounded-xl h-full"
       )}
     >
-      <div className="relative w-full h-full  aspect-square rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-square rounded-lg overflow-hidden">
         <LocalizedClientLink
           href={`/products/${product.handle}`}
           aria-label={`${translations.actions.view} ${productName}`}

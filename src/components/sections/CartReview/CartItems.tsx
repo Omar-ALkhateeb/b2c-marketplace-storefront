@@ -37,7 +37,7 @@ function groupItemsBySeller(cart: HttpTypes.StoreCart) {
           seller: {
             name: "Kiddo",
             id: "kiddo",
-            photo: "/Logo.svg",
+            photo: "/Kiddo.png",
             created_at: new Date(),
           },
           items: [],

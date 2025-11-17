@@ -19,7 +19,7 @@ export const Cart = async () => {
       </div>
 
       {/* Order Summary Card */}
-      <div className="bg-white rounded-2xl shadow-sm p-4 sticky bottom-20 z-10">
+      <div className="bg-white rounded-2xl shadow-sm p-4">
         <h3 className="text-sm font-bold text-primary mb-3">{translations.cart.orderSummary}</h3>
         <CartSummary
           item_total={cart?.item_subtotal || 0}
