@@ -126,6 +126,8 @@ export const translations = {
     orderConfirmed: "تم تأكيد الطلب",
     thankYou: "شكراً لك!",
     orderNumber: "رقم الطلب",
+    completeYourOrder:"اكمل طلبك",
+
   },
 
   // Address
