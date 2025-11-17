@@ -5,6 +5,7 @@ import { SearchIcon } from "@/icons"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { redirect } from "next/navigation"
+import { translations } from "@/lib/translations"
 
 export const NavbarSearch = () => {
   const searchParams = useSearchParams()
@@ -24,7 +25,7 @@ export const NavbarSearch = () => {
     <form className="flex items-center" method="POST" onSubmit={submitHandler}>
       <Input
         icon={<SearchIcon />}
-        placeholder="Search product"
+        placeholder={translations.nav.search}
         value={search}
         changeValue={setSearch}
       />

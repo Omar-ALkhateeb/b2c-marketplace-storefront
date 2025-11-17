@@ -20,6 +20,7 @@ export const ProductCarousel = ({
         : "y",
     loop: true,
     align: "start",
+    direction: 'rtl',
   })
 
   return (

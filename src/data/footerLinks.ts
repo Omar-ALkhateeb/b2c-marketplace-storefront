@@ -1,21 +1,23 @@
+import { translations } from "@/lib/translations"
+
 const links = {
   customerServices: [
-    { label: 'FAQs', path: '#' },
-    { label: 'Track Order', path: '#' },
-    { label: 'Returns', path: '#' },
-    { label: 'Delivery', path: '#' },
-    { label: 'Payment', path: '#' },
+    { label: translations.footer.faqs, path: '#' },
+    { label: translations.footer.trackOrder, path: '#' },
+    { label: translations.footer.returns, path: '#' },
+    { label: translations.footer.delivery, path: '#' },
+    { label: translations.footer.payment, path: '#' },
   ],
   about: [
-    { label: 'About us', path: '#' },
-    { label: 'Blog', path: '#' },
-    { label: 'Privacy Policy', path: '#' },
-    { label: 'Terms & Conditions', path: '#' },
+    { label: translations.footer.aboutUs, path: '#' },
+    { label: translations.footer.blog, path: '#' },
+    { label: translations.footer.privacyPolicy, path: '#' },
+    { label: translations.footer.termsConditions, path: '#' },
   ],
   connect: [
-    { label: 'Facebook', path: 'https://facebook.com' },
-    { label: 'Instagram', path: 'https://instagram.com' },
-    { label: 'LinekdIn', path: 'https://linkedin.com' },
+    { label: translations.footer.facebook, path: 'https://facebook.com' },
+    { label: translations.footer.instagram, path: 'https://instagram.com' },
+    { label: translations.footer.linkedin, path: 'https://linkedin.com' },
   ],
 };
 

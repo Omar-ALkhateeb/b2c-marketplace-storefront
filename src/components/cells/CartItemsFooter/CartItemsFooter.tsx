@@ -9,7 +9,7 @@ export const CartItemsFooter = ({
 }) => {
   return (
     <div className='bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-100'>
-      <p className='text-xs text-secondary'>Delivery Fee</p>
+      <p className='text-xs text-secondary'>اجور التوصيل</p>
       <p className='text-xs font-semibold text-primary'>
         {convertToLocale({
           amount: price / 1,

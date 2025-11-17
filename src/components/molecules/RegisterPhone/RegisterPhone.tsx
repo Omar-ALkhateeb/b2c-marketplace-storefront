@@ -11,6 +11,7 @@ import PhoneInput from "react-phone-number-input"
 import { Otp } from "@/components/sections/otp"
 import { useParams } from "next/navigation"
 import { Button } from "@medusajs/ui"
+import { translations } from "@/lib/translations"
 
 // type Props = {
 //   setCurrentView: (view: LOGIN_VIEW) => void
@@ -52,16 +53,15 @@ const RegisterPhone = () => {
       data-testid="register-page"
     >
       <h1 className="text-large-semi uppercase mb-6">
-        Become a Medusa Store Member
+        {translations.ui.becomeMember}
       </h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your Medusa Store Member profile, and get access to an enhanced
-        shopping experience.
+        {translations.ui.createProfileMessage}
       </p>
       <form className="w-full flex flex-col" onSubmit={handleSubmit}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
-            label="First name"
+            label={translations.auth.firstName}
             name="first_name"
             required
             autoComplete="given-name"
@@ -70,7 +70,7 @@ const RegisterPhone = () => {
             onChange={(e) => setFirstName(e.target.value)}
           />
           <Input
-            label="Last name"
+            label={translations.auth.lastName}
             name="last_name"
             required
             autoComplete="family-name"
@@ -79,7 +79,7 @@ const RegisterPhone = () => {
             onChange={(e) => setLastName(e.target.value)}
           />
           <PhoneInput
-            placeholder="Enter phone number"
+            placeholder={translations.ui.enterPhoneNumber}
             value={phone}
             onChange={(value) => setPhone(value as string)}
             name="phone"
@@ -114,16 +114,16 @@ const RegisterPhone = () => {
           variant="primary"
           isLoading={loading}
         >
-          Join
+          {translations.ui.join}
         </Button>
       </form>
       <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Already a member?{" "}
+        {translations.auth.alreadyHaveAccount}{" "}
         <button
           // onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN_PHONE)}
           className="underline"
         >
-          Sign in
+          {translations.auth.signIn}
         </button>
         .
       </span>

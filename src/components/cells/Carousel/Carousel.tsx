@@ -22,6 +22,7 @@ export const CustomCarousel = ({
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align,
+    direction: 'rtl',
   })
 
   const [selectedIndex, setSelectedIndex] = useState(0)

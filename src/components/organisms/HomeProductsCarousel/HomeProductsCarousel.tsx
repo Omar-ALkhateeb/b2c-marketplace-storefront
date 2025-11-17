@@ -5,6 +5,7 @@ import { Product } from "@/types/product"
 import { HttpTypes } from "@medusajs/types"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
 import Link from "next/link" // Added Link import
+import { translations } from "@/lib/translations"
 
 export const HomeProductsCarousel = async ({
   locale,
@@ -34,7 +35,7 @@ export const HomeProductsCarousel = async ({
     <div className="flex flex-col w-full px-4 lg:px-8 py-1 relative z-10">
       {/* MODIFIED: Combined title and button into a single flex row (justify-between) */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="heading-md text-foreground pb-2">Featured Products</h3>
+        <h3 className="heading-md text-foreground pb-2">{translations.common.featured} {translations.product.products}</h3>
 
         {/* FIX APPLIED: Removed 'hidden sm:block' to ensure visibility on all mobile screens. */}
         <Link
@@ -42,7 +43,7 @@ export const HomeProductsCarousel = async ({
           href="/store?sort=newest"
           className="px-4 text-gray-800 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 ease-in-out text-sm tracking-wide"
         >
-          See More
+          {translations.actions.seeMore}
         </Link>
       </div>
 
@@ -54,7 +55,7 @@ export const HomeProductsCarousel = async ({
             // CRITICAL: w-1/2 ensures 2 cards fit side-by-side on mobile view.
             <div
               key={product.id}
-              className="w-1/2 pr-3 sm:w-1/3 md:w-1/4 lg:w-1/6"
+              className="w-1/2 pe-3 sm:w-1/3 md:w-1/4 lg:w-1/6"
             >
               <ProductCard
                 product={product}

@@ -12,6 +12,7 @@ import { retrieveRegion } from "@/lib/data/regions"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
+import { translations } from "@/lib/translations"
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -23,7 +24,7 @@ export default async function CheckoutPage({}) {
     <Suspense
       fallback={
         <div className="container flex items-center justify-center">
-          Loading...
+          {translations.common.loading}
         </div>
       }
     >

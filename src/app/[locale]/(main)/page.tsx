@@ -6,6 +6,7 @@ import {
   HomeProductSection,
   ShopByStyleSection,
 } from "@/components/sections"
+import { NavbarSearch } from "@/components/molecules"
 
 import type { Metadata } from "next"
 import { headers } from "next/headers"
@@ -15,6 +16,7 @@ import { toHreflang } from "@/lib/helpers/hreflang"
 import { listProducts } from "@/lib/data/products"
 import { HttpTypes } from "@medusajs/types"
 import { SellerProps } from "@/types/seller"
+import { translations } from "@/lib/translations"
 // import { redirect } from "next/navigation"
 
 export async function generateMetadata({
@@ -52,9 +54,9 @@ export async function generateMetadata({
     languages = { [toHreflang(locale)]: `${baseUrl}/${locale}` }
   }
 
-  const title = "Home"
+  const title = translations.nav.home
   const description =
-    "Welcome to Mercur B2C Demo! Create a modern marketplace that you own and customize in every aspect with high-performance, fully customizable storefront."
+    "مرحباً بك في المتجر! اكتشف مجموعة واسعة من المنتجات عالية الجودة من أفضل البائعين."
   const ogImage = "/B2C_Storefront_Open_Graph.png"
   const canonical = `${baseUrl}/${locale}`
 
@@ -178,38 +180,26 @@ export default async function Home({
         }}
       />
 
-      {/* Hero Section - Compact App Style */}
-      <Hero
-        image="/images/hero/Image.jpg"
-        heading="Discover Your Style"
-        paragraph="Shop trending fashion from top brands"
-        buttons={[
-          { label: "Shop Now", path: "/categories" },
-          {
-            label: "Sell",
-            path:
-              process.env.NEXT_PUBLIC_ALGOLIA_ID === "UO3C5Y8NHX"
-                ? "https://vendor-sandbox.vercel.app/"
-                : "https://vendor.mercurjs.com",
-          },
-        ]}
-      />
-
-      {/* Categories Section - App Style */}
-      <div className="bg-white mt-2 pt-4 pb-3">
+      {/* Categories Carousel - First */}
+      <div className="bg-white pt-4 pb-3">
         <div className="px-4 mb-3">
-          <h2 className="text-base font-bold text-primary">Categories</h2>
+          <h2 className="text-base font-bold text-primary">{translations.categories.categories}</h2>
         </div>
         <HomeCategories heading="" />
       </div>
 
-      {/* Featured Products Section - App Cards */}
+      {/* Search Bar - Second */}
+      <div className="bg-white mt-2 px-4 py-4">
+        <NavbarSearch />
+      </div>
+
+      {/* Featured Products Section - Third */}
       {featuredProducts.length > 0 && (
         <div className="mt-2 bg-white py-4">
           <div className="px-4 mb-3">
-            <h2 className="text-base font-bold text-primary">Trending Now</h2>
+            <h2 className="text-base font-bold text-primary">{translations.common.trending}</h2>
             <p className="text-xs text-secondary mt-0.5">
-              What's hot this season
+              الأكثر مبيعاً هذا الموسم
             </p>
           </div>
           <HomeProductSection
@@ -220,23 +210,42 @@ export default async function Home({
         </div>
       )}
 
+      {/* Hero Section - Compact App Style */}
+      {/* <div className="mt-2">
+        <Hero
+          image="/images/hero/Image.jpg"
+          heading="اكتشف أسلوبك"
+          paragraph="تسوق أحدث صيحات الموضة من أفضل العلامات التجارية"
+          buttons={[
+            { label: "تسوق الآن", path: "/categories" },
+            {
+              label: "بيع",
+              path:
+                process.env.NEXT_PUBLIC_ALGOLIA_ID === "UO3C5Y8NHX"
+                  ? "https://vendor-sandbox.vercel.app/"
+                  : "https://vendor.mercurjs.com",
+            },
+          ]}
+        />
+      </div> */}
+
       {/* Shop by Style Section - Compact */}
-      <div className="mt-2 px-4 py-4">
+      {/* <div className="mt-2 px-4 py-4">
         <ShopByStyleSection />
-      </div>
+      </div> */}
 
       {/* Featured Collection Banner - App Card */}
-      <div className="mt-2">
+      {/* <div className="mt-2">
         <BannerSection />
-      </div>
+      </div> */}
 
       {/* New Arrivals Section */}
       {featuredProducts.length > 4 && (
         <div className="mt-2 bg-white py-4">
           <div className="px-4 mb-3">
-            <h2 className="text-base font-bold text-primary">New Arrivals</h2>
+            <h2 className="text-base font-bold text-primary">وصل حديثاً</h2>
             <p className="text-xs text-secondary mt-0.5">
-              Fresh styles added daily
+              إضافات جديدة يومياً
             </p>
           </div>
           <HomeProductSection
@@ -248,9 +257,9 @@ export default async function Home({
       )}
 
       {/* Blog/Tips Section - Compact */}
-      <div className="mt-2">
+      {/* <div className="mt-2">
         <BlogSection />
-      </div>
+      </div> */}
     </main>
   )
 }

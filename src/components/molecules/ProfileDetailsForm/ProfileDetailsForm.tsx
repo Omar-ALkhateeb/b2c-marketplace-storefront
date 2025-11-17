@@ -13,6 +13,7 @@ import { Button } from "@/components/atoms"
 import { updateCustomer } from "@/lib/data/customer"
 import { HttpTypes } from "@medusajs/types"
 import { useState } from "react"
+import { translations } from "@/lib/translations"
 
 interface Props {
   defaultValues?: ProfileDetailsFormData
@@ -70,27 +71,27 @@ const Form: React.FC<Props> = ({ handleClose }) => {
       <div className="px-4 space-y-4">
         <div className="max-w-full grid grid-cols-2 items-top gap-4 mb-4">
           <LabeledInput
-            label="First name"
-            placeholder="Type first name"
+            label={translations.auth.firstName}
+            placeholder={translations.auth.firstName}
             error={errors.firstName as FieldError}
             {...register("firstName")}
           />
           <LabeledInput
-            label="Last name"
-            placeholder="Type last name"
+            label={translations.auth.lastName}
+            placeholder={translations.auth.lastName}
             error={errors.lastName as FieldError}
             {...register("lastName")}
           />
           <LabeledInput
-            label="Phone"
-            placeholder="Type phone number"
+            label={translations.auth.phone}
+            placeholder={translations.auth.phone}
             error={errors.phone as FieldError}
             {...register("phone")}
           />
-          <LabeledInput label="Email" disabled {...register("email")} />
+          <LabeledInput label={translations.auth.email} disabled {...register("email")} />
         </div>
         {error && <p className="label-md text-negative">{error}</p>}
-        <Button className="w-full ">Save</Button>
+        <Button className="w-full ">{translations.actions.save}</Button>
       </div>
     </form>
   )

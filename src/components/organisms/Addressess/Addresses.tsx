@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { HttpTypes } from "@medusajs/types"
 import { isEmpty } from "lodash"
 import { useState } from "react"
+import { translations } from "@/lib/translations"
 
 export const Addresses = ({
   user,
@@ -64,18 +65,17 @@ export const Addresses = ({
           isEmpty(user.addresses) ? "space-y-8" : "space-y-4"
         )}
       >
-        <h1 className="heading-md uppercase">Addresses</h1>
+        <h1 className="heading-md uppercase">{translations.address.addresses}</h1>
         {isEmpty(user.addresses) ? (
           <div className="text-center">
             <h3 className="heading-lg text-primary uppercase">
-              No saved shipping addresses
+              {translations.ui.noSavedAddresses}
             </h3>
             <p className="text-lg text-secondary mt-2">
-              You currently have no saved shipping addresses. <br />
-              Add an address to make your checkout process quicker and easier.
+              {translations.ui.addAddressHelp}
             </p>
             <Button onClick={handleAdd} className="mt-4">
-              Add address
+              {translations.address.addAddress}
             </Button>
           </div>
         ) : (
@@ -115,19 +115,19 @@ export const Addresses = ({
                     className="text-negative"
                     onClick={() => setDeleteAddress(address.id)}
                   >
-                    Delete
+                    {translations.actions.delete}
                   </Button>
                   <Button
                     variant="tonal"
                     onClick={() => handleEdit(address.id)}
                   >
-                    Edit
+                    {translations.actions.edit}
                   </Button>
                 </div>
               </Card>
             ))}
             {user.addresses.length < 6 && (
-              <Button onClick={handleAdd}>Add address</Button>
+              <Button onClick={handleAdd}>{translations.address.addAddress}</Button>
             )}
           </>
         )}
@@ -136,8 +136,8 @@ export const Addresses = ({
         <Modal
           heading={
             defaultValues?.addressId
-              ? `Edit adddress: ${defaultValues.addressName}`
-              : "Add address"
+              ? `${translations.address.editAddress}: ${defaultValues.addressName}`
+              : translations.address.addAddress
           }
           onClose={() => setShowForm(false)}
         >
@@ -150,20 +150,20 @@ export const Addresses = ({
       )}
       {deleteAddress && (
         <Modal
-          heading="Confirm your action"
+          heading={translations.ui.confirmAction}
           onClose={() => setDeleteAddress(null)}
         >
           <div className="px-4 flex flex-col gap-4">
-            <p>Are you sure you want to delete this address?</p>
+            <p>{translations.ui.deleteAddress}</p>
             <div className="flex justify-end gap-4">
               <Button variant="tonal" onClick={() => setDeleteAddress(null)}>
-                Cancel
+                {translations.actions.cancel}
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleDelete(deleteAddress)}
               >
-                Delete
+                {translations.actions.delete}
               </Button>
             </div>
           </div>

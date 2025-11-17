@@ -18,6 +18,7 @@ import { updateCustomerPassword } from "@/lib/data/customer"
 import { Heading, toast } from "@medusajs/ui"
 import LocalizedClientLink from "../LocalizedLink/LocalizedLink"
 import { PasswordValidator } from "@/components/cells/PasswordValidator/PasswordValidator"
+import { translations } from "@/lib/translations"
 
 export const ProfilePasswordForm = ({ token }: { token?: string }) => {
   const form = useForm<ProfilePasswordFormData>({
@@ -94,18 +95,17 @@ const Form = ({
         level="h1"
         className="uppercase heading-md text-primary text-center"
       >
-        Password updated
+        {translations.auth.resetPassword}
       </Heading>
       <p className="text-center my-8">
-        Your password has been updated. You can now login with your new
-        password.
+        {translations.auth.resetPassword}
       </p>
       <LocalizedClientLink href="/user">
         <Button
           className="uppercase py-3 px-6 !font-semibold w-full"
           size="large"
         >
-          Go to user page
+          {translations.user.profile}
         </Button>
       </LocalizedClientLink>
     </div>
@@ -115,13 +115,13 @@ const Form = ({
       onSubmit={handleSubmit(updatePassword)}
     >
       <LabeledInput
-        label="Current password"
+        label={translations.user.currentPassword}
         type="password"
         error={errors.currentPassword as FieldError}
         {...register("currentPassword")}
       />
       <LabeledInput
-        label="New password"
+        label={translations.auth.newPassword}
         type="password"
         error={errors.newPassword as FieldError}
         {...register("newPassword")}
@@ -131,12 +131,12 @@ const Form = ({
         setError={setNewPasswordError}
       />
       <LabeledInput
-        label="Confirm new password"
+        label={translations.auth.confirmPassword}
         type="password"
         error={confirmPasswordError as FieldError}
         {...register("confirmPassword")}
       />
-      <Button className="w-full my-4">Change password</Button>
+      <Button className="w-full my-4">{translations.user.changePassword}</Button>
     </form>
   )
 }

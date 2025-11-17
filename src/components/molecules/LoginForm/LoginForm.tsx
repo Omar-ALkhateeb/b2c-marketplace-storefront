@@ -14,6 +14,7 @@ import { loginFormSchema, LoginFormData } from "./schema"
 import { useState } from "react"
 import { login } from "@/lib/data/customer"
 import { useRouter } from "next/navigation"
+import { translations } from "@/lib/translations"
 
 export const LoginForm = () => {
   const methods = useForm<LoginFormData>({
@@ -57,31 +58,31 @@ const Form = () => {
   return (
     <main className="container">
       <h1 className="heading-xl text-center uppercase my-6">
-        Log in to your account
+        {translations.auth.loginToAccount}
       </h1>
       <form onSubmit={handleSubmit(submit)}>
         <div className="w-96 max-w-full mx-auto space-y-4">
           <LabeledInput
-            label="E-mail"
-            placeholder="Your e-mail address"
+            label={translations.auth.email}
+            placeholder={translations.auth.email}
             error={errors.email as FieldError}
             {...register("email")}
           />
           <LabeledInput
-            label="Password"
-            placeholder="Your password"
+            label={translations.auth.password}
+            placeholder={translations.auth.password}
             type="password"
             error={errors.password as FieldError}
             {...register("password")}
           />
           {error && <p className="label-md text-negative">{error}</p>}
           <Button className="w-full" disabled={isSubmitting}>
-            Log in
+            {translations.auth.login}
           </Button>
           <p className="text-center label-md">
-            Don&apos;t have an account yet?{" "}
+            {translations.auth.dontHaveAccount}{" "}
             <LocalizedClientLink href="/user/register" className="underline">
-              Sign up!
+              {translations.auth.signUp}
             </LocalizedClientLink>
           </p>
         </div>

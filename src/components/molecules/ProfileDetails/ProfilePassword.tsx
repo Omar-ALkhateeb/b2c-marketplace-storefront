@@ -9,6 +9,7 @@ import { Modal } from "../Modal/Modal"
 // import { ProfilePasswordForm } from "../ProfilePasswordForm/ProfilePasswordForm"
 import { HttpTypes } from "@medusajs/types"
 import { sendResetPasswordEmail } from "@/lib/data/customer"
+import { translations } from "@/lib/translations"
 
 export const ProfilePassword = ({
   user,
@@ -28,37 +29,37 @@ export const ProfilePassword = ({
     <>
       <Card className="bg-secondary p-4 flex justify-between items-center mt-8">
         <Heading level="h2" className="heading-sm uppercase">
-          Password
+          {translations.auth.password}
         </Heading>
         <Button
           variant="tonal"
           className="uppercase flex items-center gap-2 font-semibold"
           onClick={() => setShowForm(true)}
         >
-          Change password
+          {translations.user.changePassword}
         </Button>
       </Card>
       <Card className="p-0">
         <div className="p-4">
-          <p className="label-md text-secondary">Current password</p>
+          <p className="label-md text-secondary">{translations.user.currentPassword}</p>
           <p className="label-lg text-primary">****************</p>
         </div>
         <Divider />
         <div className="p-4">
           <p className="label-md text-secondary flex items-center gap-4">
             <InfoIcon size={18} className="text-secondary" />
-            Always remember to choose a unique password to protect your account.
+            {translations.auth.password}
           </p>
         </div>
       </Card>
       {showForm && (
-        <Modal heading="Change password" onClose={() => setShowForm(false)}>
+        <Modal heading={translations.user.changePassword} onClose={() => setShowForm(false)}>
           <div className="flex p-4 justify-center">
             <Button
               className="uppercase py-3 px-6 !font-semibold"
               onClick={handleSendResetPasswordEmail}
             >
-              Send reset password email
+              {translations.auth.resetPassword}
             </Button>
           </div>
           {/* <ProfilePasswordForm user={user} /> */}

@@ -5,6 +5,7 @@ import { Order, Review } from "@/lib/data/reviews"
 import { isEmpty } from "lodash"
 import { usePathname } from "next/navigation"
 import { OrderCard } from "./OrderCard"
+import { translations } from "@/lib/translations"
 
 export const ReviewsWritten = ({
   reviews,
@@ -17,7 +18,7 @@ export const ReviewsWritten = ({
 
   return (
     <div className="md:col-span-3 space-y-8">
-      <h1 className="heading-md uppercase">Reviews</h1>
+      <h1 className="heading-md uppercase">{translations.reviews.reviews}</h1>
       <div className="flex gap-4">
         {navigation.map((item) => (
           <NavigationItem
@@ -34,11 +35,10 @@ export const ReviewsWritten = ({
         <Card>
           <div className="text-center py-6">
             <h3 className="heading-lg text-primary uppercase">
-              No written reviews
+              {translations.ui.noReviewsToWrite}
             </h3>
             <p className="text-lg text-secondary mt-2">
-              You haven&apos;t written any reviews yet. Once you write a review,
-              it will appear here.
+              {translations.ui.noReviewsMessage}
             </p>
           </div>
         </Card>

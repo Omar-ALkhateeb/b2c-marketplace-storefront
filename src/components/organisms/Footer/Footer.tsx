@@ -1,5 +1,6 @@
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import footerLinks from "@/data/footerLinks"
+import { translations } from "@/lib/translations"
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
         {/* Customer Services Column */}
         <div className="p-6 border rounded-sm">
           <h2 className="heading-sm text-primary mb-3 uppercase">
-            Customer services
+            {translations.footer.customerService}
           </h2>
           <nav className="space-y-3" aria-label="Customer services navigation">
             {footerLinks.customerServices.map(({ label, path }) => (
@@ -25,7 +26,7 @@ export function Footer() {
 
         {/* About Column */}
         <div className="p-6 border rounded-sm">
-          <h2 className="heading-sm text-primary mb-3 uppercase">About</h2>
+          <h2 className="heading-sm text-primary mb-3 uppercase">{translations.footer.about}</h2>
           <nav className="space-y-3" aria-label="About navigation">
             {footerLinks.about.map(({ label, path }) => (
               <LocalizedClientLink
@@ -41,7 +42,7 @@ export function Footer() {
 
         {/* Connect Column */}
         <div className="p-6 border rounded-sm">
-          <h2 className="heading-sm text-primary mb-3 uppercase">connect</h2>
+          <h2 className="heading-sm text-primary mb-3 uppercase">{translations.footer.connect}</h2>
           <nav className="space-y-3" aria-label="Social media navigation">
             {footerLinks.connect.map(({ label, path }) => (
               <a
@@ -61,7 +62,7 @@ export function Footer() {
       </div>
 
       <div className="py-6 border rounded-sm ">
-        <p className="text-md text-secondary text-center ">© 2024 Fleek</p>
+        <p className="text-md text-secondary text-center ">© {new Date().getFullYear()} Kiddo</p>
       </div>
     </footer>
   )

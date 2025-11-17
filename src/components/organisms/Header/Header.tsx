@@ -10,6 +10,7 @@ import { retrieveCustomer } from "@/lib/data/customer"
 import { Wishlist } from "@/types/wishlist"
 import { getUserWishlists } from "@/lib/data/wishlist"
 import { headers } from "next/headers"
+import { translations } from "@/lib/translations"
 
 export const Header = async () => {
   // const pathname = usePathname()
@@ -49,9 +50,9 @@ export const Header = async () => {
   return (
     <header className="fixed bottom-0 left-0 right-0 bg-primary border-t shadow-lg z-[9999]">
       <nav className="flex items-center justify-around py-3 px-4 bg-primary">
-        <Link href="/categories" className={getTabClassName("/")}>
+        <Link href="/" className={getTabClassName("/")}>
           <Home size={22} />
-          <span>Home</span>
+          <span>{translations.nav.home}</span>
         </Link>
 
         <Link
@@ -59,13 +60,13 @@ export const Header = async () => {
           className={getTabClassName("/categories/list")}
         >
           <Grid3X3 size={22} />
-          <span>Categories</span>
+          <span>{translations.nav.categories}</span>
         </Link>
 
         {user && (
           <Link href="/user/orders" className={getTabClassName("/user/orders")}>
             <Package size={22} />
-            <span>Orders</span>
+            <span>{translations.nav.orders}</span>
           </Link>
         )}
 
@@ -78,7 +79,7 @@ export const Header = async () => {
               </Badge>
             )}
           </div>
-          <span>Cart</span>
+          <span>{translations.nav.cart}</span>
         </Link>
 
         <Link
@@ -86,7 +87,7 @@ export const Header = async () => {
           className={getTabClassName(user ? "/user" : "/user")}
         >
           <User size={22} />
-          <span>Profile</span>
+          <span>{translations.nav.profile}</span>
         </Link>
       </nav>
     </header>

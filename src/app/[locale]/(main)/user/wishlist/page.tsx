@@ -8,6 +8,7 @@ import { WishlistItem } from "@/components/cells"
 import { getUserWishlists } from "@/lib/data/wishlist"
 import { HttpTypes } from "@medusajs/types"
 import { UserNavigation } from "@/components/molecules"
+import { translations } from "@/lib/translations"
 
 export default async function Wishlist() {
   const user = await retrieveCustomer()
@@ -32,20 +33,20 @@ export default async function Wishlist() {
           {isEmpty(wishlist?.[0]?.products) ? (
             <div className="w-96 mx-auto flex flex-col items-center justify-center">
               <h2 className="heading-lg text-primary uppercase mb-2">
-                Wishlist
+                {translations.user.wishlist}
               </h2>
               <p className="text-lg text-secondary mb-6">
-                Your wishlist is currently empty.
+                {translations.ui.emptyWishlist}
               </p>
               <LocalizedClientLink href="/categories" className="w-full">
-                <Button className="w-full">Explore</Button>
+                <Button className="w-full">{translations.ui.explore}</Button>
               </LocalizedClientLink>
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              <h2 className="heading-lg text-primary uppercase">Wishlist</h2>
+              <h2 className="heading-lg text-primary uppercase">{translations.user.wishlist}</h2>
               <div className="flex justify-between items-center">
-                <p>{count} listings</p>
+                <p>{count} {translations.ui.listings}</p>
               </div>
               <div className="flex flex-wrap max-md:justify-center gap-4">
                 {wishlist?.[0].products?.map((product) => (

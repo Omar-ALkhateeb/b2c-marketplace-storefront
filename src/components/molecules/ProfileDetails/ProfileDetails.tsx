@@ -6,6 +6,7 @@ import { useState } from "react"
 import { ProfileDetailsForm } from "../ProfileDetailsForm/ProfileDetailsForm"
 import { Divider, Heading } from "@medusajs/ui"
 import { PencilSquare } from "@medusajs/icons"
+import { translations } from "@/lib/translations"
 
 export const ProfileDetails = ({ user }: { user: HttpTypes.StoreCustomer }) => {
   const [showForm, setShowForm] = useState(false)
@@ -14,7 +15,7 @@ export const ProfileDetails = ({ user }: { user: HttpTypes.StoreCustomer }) => {
     <>
       <Card className="bg-secondary p-4 flex justify-between items-center">
         <Heading level="h2" className="heading-sm uppercase">
-          Profile details
+          {translations.ui.profileDetails}
         </Heading>
         <Button
           variant="tonal"
@@ -22,30 +23,30 @@ export const ProfileDetails = ({ user }: { user: HttpTypes.StoreCustomer }) => {
           className="uppercase flex items-center gap-2 font-semibold"
         >
           <PencilSquare />
-          Edit details
+          {translations.ui.editDetails}
         </Button>
       </Card>
       <Card className="p-0">
         <div className="p-4">
-          <p className="label-md text-secondary">Name</p>
+          <p className="label-md text-secondary">{translations.ui.name}</p>
           <p className="label-lg text-primary">
             {`${user.first_name} ${user.last_name}`}
           </p>
         </div>
         <Divider />
         <div className="p-4">
-          <p className="label-md text-secondary">Email</p>
+          <p className="label-md text-secondary">{translations.auth.email}</p>
           <p className="label-lg text-primary">{user.email}</p>
         </div>
         <Divider />
         <div className="p-4">
-          <p className="label-md text-secondary">Phone number</p>
+          <p className="label-md text-secondary">{translations.auth.phone}</p>
           <p className="label-lg text-primary">{user.phone}</p>
         </div>
       </Card>
       {showForm && (
         <Modal
-          heading="Edit profile details"
+          heading={translations.ui.editDetails}
           onClose={() => setShowForm(false)}
         >
           <ProfileDetailsForm

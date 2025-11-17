@@ -7,6 +7,7 @@ import { BaseHit, Hit } from "instantsearch.js"
 import clsx from "clsx"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import { getProductPrice } from "@/lib/helpers/get-product-price"
+import { translations } from "@/lib/translations"
 
 export const ProductCard = ({
   product,
@@ -34,8 +35,8 @@ export const ProductCard = ({
       <div className="relative w-full h-full  aspect-square rounded-lg overflow-hidden">
         <LocalizedClientLink
           href={`/products/${product.handle}`}
-          aria-label={`View ${productName}`}
-          title={`View ${productName}`}
+          aria-label={`${translations.actions.view} ${productName}`}
+          title={`${translations.actions.view} ${productName}`}
         >
           <div className="overflow-hidden  w-full h-full flex justify-center align-center ">
             {product.thumbnail ? (
@@ -65,19 +66,19 @@ export const ProductCard = ({
         </LocalizedClientLink>
         <LocalizedClientLink
           href={`/products/${product.handle}`}
-          aria-label={`See more about ${productName}`}
-          title={`See more about ${productName}`}
+          aria-label={`${translations.actions.seeMore} ${productName}`}
+          title={`${translations.actions.seeMore} ${productName}`}
         >
-          <Button className="absolute rounded-lg bg-kiddo-accent hover:bg-kiddo-dark text-white h-auto lg:h-[48px] lg:group-hover:block hidden w-full 
+          <Button className="absolute rounded-lg bg-kiddo-accent hover:bg-kiddo-dark text-white h-auto lg:h-[48px] lg:group-hover:block hidden w-full
           uppercase bottom-2 z-10 font-medium">
-            See More
+            {translations.actions.seeMore}
           </Button>
         </LocalizedClientLink>
       </div>
       <LocalizedClientLink
         href={`/products/${product.handle}`}
-        aria-label={`Go to ${productName} page`}
-        title={`Go to ${productName} page`}
+        aria-label={`${translations.actions.goTo} ${productName}`}
+        title={`${translations.actions.goTo} ${productName}`}
       >
         <div className="flex justify-between p-2 ">
           <div className="w-full">

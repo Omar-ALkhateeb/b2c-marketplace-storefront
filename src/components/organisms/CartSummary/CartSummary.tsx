@@ -1,6 +1,7 @@
 "use client"
 
 import { convertToLocale } from "@/lib/helpers/money"
+import { translations } from "@/lib/translations"
 
 export const CartSummary = ({
   item_total,
@@ -19,7 +20,7 @@ export const CartSummary = ({
     <div>
       <div className="space-y-2.5 text-xs text-secondary">
         <div className="flex justify-between">
-          <span>Items</span>
+          <span>{translations.ui.items}</span>
           <span className="text-primary font-medium">
             {convertToLocale({
               amount: item_total,
@@ -28,7 +29,7 @@ export const CartSummary = ({
           </span>
         </div>
         <div className="flex justify-between">
-          <span>Delivery</span>
+          <span>{translations.ui.deliveryFee}</span>
           <span className="text-primary font-medium">
             {convertToLocale({
               amount: shipping_total,
@@ -37,7 +38,7 @@ export const CartSummary = ({
           </span>
         </div>
         <div className="flex justify-between">
-          <span>Tax</span>
+          <span>{translations.cart.tax}</span>
           <span className="text-primary font-medium">
             {convertToLocale({
               amount: tax,
@@ -46,7 +47,7 @@ export const CartSummary = ({
           </span>
         </div>
         <div className="flex justify-between border-t border-gray-200 pt-3 items-center">
-          <span className="text-sm font-bold text-primary">Total</span>
+          <span className="text-sm font-bold text-primary">{translations.cart.total}</span>
           <span className="text-lg font-bold text-primary">
             {convertToLocale({
               amount: total,

@@ -2,6 +2,7 @@ import { OrdersPagination } from "@/components/organisms/OrdersPagination/Orders
 import { SingleOrderReturn } from "@/components/organisms/SingleOrderReturn/SingleOrderReturn"
 import { Heading } from "@medusajs/ui"
 import { isEmpty } from "lodash"
+import { translations } from "@/lib/translations"
 
 const LIMIT = 10
 
@@ -28,12 +29,10 @@ export const OrderReturnRequests = ({
     return (
       <div className="mt-8">
         <Heading level="h2" className="uppercase text-center heading-lg">
-          No returns
+          {translations.ui.noReturns}
         </Heading>
         <p className="text-center text-secondary w-96 mt-8 mx-auto">
-          {
-            "You haven't requested any returns yet. Once you request a return, it will appear here."
-          }
+          {translations.ui.noReturnsMessage}
         </p>
       </div>
     )

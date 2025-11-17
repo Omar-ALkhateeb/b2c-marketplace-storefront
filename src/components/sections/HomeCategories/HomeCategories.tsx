@@ -27,14 +27,14 @@ type CategoryData = {
 // Map the data structure to include the Font Awesome icon object
 export const categories: (CategoryData & { icon: any })[] = [
   // Using Font Awesome Solid icons here
-  { id: 1, name: "Milk", handle: "milk", icon: faMugSaucer },
-  { id: 2, name: "Clothing", handle: "clothing", icon: faShirt },
-  { id: 3, name: "Bathing", handle: "bathing", icon: faBath },
-  { id: 4, name: "BabyGear", handle: "baby-gear", icon: faBaby },
-  { id: 5, name: "Accessories", handle: "accessories", icon: faSwatchbook },
-  { id: 6, name: "Tops", handle: "tops", icon: faTshirt },
-  { id: 7, name: "Food", handle: "food", icon: faAppleWhole },
-  { id: 8, name: "Toys", handle: "toys", icon: faGamepad },
+  { id: 1, name: "حليب", handle: "milk", icon: faMugSaucer },
+  { id: 2, name: "ملابس", handle: "clothing", icon: faShirt },
+  { id: 3, name: "استحمام", handle: "bathing", icon: faBath },
+  { id: 4, name: "معدات الأطفال", handle: "baby-gear", icon: faBaby },
+  { id: 5, name: "إكسسوارات", handle: "accessories", icon: faSwatchbook },
+  { id: 6, name: "قمصان", handle: "tops", icon: faTshirt },
+  { id: 7, name: "طعام", handle: "food", icon: faAppleWhole },
+  { id: 8, name: "ألعاب", handle: "toys", icon: faGamepad },
 ]
 
 // CategoryCard component - Mobile App Style

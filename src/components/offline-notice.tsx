@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { WifiOff } from "lucide-react"
+import { translations } from "@/lib/translations"
 
 export function OfflineNotice() {
   const [showOffline, setShowOffline] = useState(false)
@@ -66,23 +67,23 @@ export function OfflineNotice() {
         </div>
 
         <h1 className="mb-3 text-2xl font-semibold text-ui-fg-base">
-          No Internet Connection
+          {translations.errors.noInternetConnection}
         </h1>
 
         <p className="mb-8 max-w-md text-base text-ui-fg-muted">
-          It looks like you&apos;re offline. Please check your internet connection and try again.
+          {translations.errors.checkConnection}
         </p>
 
         <button
           onClick={() => window.location.reload()}
           className="rounded-lg bg-ui-bg-interactive px-6 py-3 font-medium text-ui-fg-on-color shadow-sm transition-all hover:bg-ui-bg-interactive-hover active:scale-95"
         >
-          Try Again
+          {translations.actions.tryAgain}
         </button>
 
         <div className="mt-8 flex items-center gap-2 text-sm text-ui-fg-subtle">
           <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse"></div>
-          <span>Offline Mode</span>
+          <span>{translations.errors.offlineMode}</span>
         </div>
       </div>
     </div>

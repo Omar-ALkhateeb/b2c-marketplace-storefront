@@ -19,35 +19,36 @@ import {
   ChevronRight
 } from "lucide-react"
 import Link from "next/link"
+import { translations } from "@/lib/translations"
 
 const navigationItems = [
   {
-    label: "Orders",
+    label: translations.nav.orders,
     href: "/user/orders",
     icon: Package,
   },
   {
-    label: "Messages",
+    label: translations.messages.messages,
     href: "/user/messages",
     icon: MessageSquare,
   },
   {
-    label: "Returns",
+    label: translations.orders.returns,
     href: "/user/returns",
     icon: RotateCcw,
   },
   {
-    label: "Addresses",
+    label: translations.user.addresses,
     href: "/user/addresses",
     icon: MapPin,
   },
   {
-    label: "Reviews",
+    label: translations.reviews.reviews,
     href: "/user/reviews",
     icon: Star,
   },
   {
-    label: "Wishlist",
+    label: translations.user.wishlist,
     href: "/user/wishlist",
     icon: Heart,
   },
@@ -84,8 +85,8 @@ export const UserNavigation = () => {
                 <span className={`text-sm ${isActive ? 'font-semibold text-primary' : 'font-medium text-primary'}`}>
                   {item.label}
                 </span>
-                {item.label === "Messages" && Boolean(unreads?.length) && (
-                  <Badge className="ml-1 w-5 h-5 p-0 text-[10px] flex items-center justify-center bg-red-500">
+                {item.label === translations.messages.messages && Boolean(unreads?.length) && (
+                  <Badge className="ms-1 w-5 h-5 p-0 text-[10px] flex items-center justify-center bg-red-500">
                     {unreads?.length}
                   </Badge>
                 )}
@@ -111,7 +112,7 @@ export const UserNavigation = () => {
               <Settings className={`w-4 h-4 ${path === '/user/settings' ? 'text-white' : 'text-secondary'}`} />
             </div>
             <span className={`text-sm ${path === '/user/settings' ? 'font-semibold text-primary' : 'font-medium text-primary'}`}>
-              Settings
+              {translations.user.settings}
             </span>
           </div>
           <ChevronRight className="w-4 h-4 text-gray-400" />
