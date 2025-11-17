@@ -3,6 +3,8 @@ import { Wishlist } from "@/types/wishlist"
 import { sdk } from "../config"
 import { getAuthHeaders } from "./cookies"
 import { revalidatePath } from "next/cache"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const getUserWishlists = async () => {
   const headers = {
@@ -12,15 +14,19 @@ export const getUserWishlists = async () => {
       .NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY as string,
   }
 
-  return sdk.client
-    .fetch<{ wishlists: Wishlist[]; count: number }>(`/store/wishlist`, {
-      cache: "no-cache",
-      headers,
-      method: "GET",
-    })
-    .then((res) => {
-      return res
-    })
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{ wishlists: Wishlist[]; count: number }>(`/store/wishlist`, {
+          cache: "no-cache",
+          headers,
+          method: "GET",
+        })
+        .then((res) => {
+          return res
+        }),
+    { wishlists: dummyData.wishlist as any, count: dummyData.wishlist.length }
+  )
 }
 
 export const addWishlistItem = async ({

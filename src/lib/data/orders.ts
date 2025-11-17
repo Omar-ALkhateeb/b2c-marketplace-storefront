@@ -5,20 +5,26 @@ import { sdk } from "../config"
 import medusaError from "../helpers/medusa-error"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { HttpTypes } from "@medusajs/types"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const retrieveOrderSet = async (id: string) => {
   const headers = {
     ...(await getAuthHeaders()),
   }
 
-  return sdk.client
-    .fetch<any>(`/store/order-set/${id}`, {
-      method: "GET",
-      headers,
-      cache: "no-cache",
-    })
-    .then(({ order_set }) => order_set)
-    .catch((err) => medusaError(err))
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<any>(`/store/order-set/${id}`, {
+          method: "GET",
+          headers,
+          cache: "no-cache",
+        })
+        .then(({ order_set }) => order_set)
+        .catch((err) => medusaError(err)),
+    dummyData.orderSet as any
+  )
 }
 
 export const retrieveOrder = async (id: string) => {
@@ -30,22 +36,26 @@ export const retrieveOrder = async (id: string) => {
     ...(await getCacheOptions("orders")),
   }
 
-  return sdk.client
-    .fetch<HttpTypes.StoreOrderResponse & { seller: SellerProps }>(
-      `/store/orders/${id}`,
-      {
-        method: "GET",
-        query: {
-          fields:
-            "*payment_collections.payments,*items,*items.metadata,*items.variant,*items.product,*seller,*order_set",
-        },
-        headers,
-        next,
-        cache: "force-cache",
-      }
-    )
-    .then(({ order }) => order)
-    .catch((err) => medusaError(err))
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<HttpTypes.StoreOrderResponse & { seller: SellerProps }>(
+          `/store/orders/${id}`,
+          {
+            method: "GET",
+            query: {
+              fields:
+                "*payment_collections.payments,*items,*items.metadata,*items.variant,*items.product,*seller,*order_set",
+            },
+            headers,
+            next,
+            cache: "force-cache",
+          }
+        )
+        .then(({ order }) => order)
+        .catch((err) => medusaError(err)),
+    dummyData.orders[0] as any
+  )
 }
 
 export const createReturnRequest = async (data: any) => {
@@ -114,30 +124,34 @@ export const listOrders = async (
     ...(await getCacheOptions("orders")),
   }
 
-  return sdk.client
-    .fetch<{
-      orders: Array<
-        HttpTypes.StoreOrder & {
-          seller: { id: string; name: string; reviews?: any[] }
-          reviews: any[]
-        }
-      >
-    }>(`/store/orders`, {
-      method: "GET",
-      query: {
-        limit,
-        offset,
-        order: "-created_at",
-        fields:
-          "*items,+items.metadata,*items.variant,*items.product,*seller,*reviews,*order_set",
-        ...filters,
-      },
-      headers,
-      next,
-      cache: "no-cache",
-    })
-    .then(({ orders }) => orders)
-    .catch((err) => medusaError(err))
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{
+          orders: Array<
+            HttpTypes.StoreOrder & {
+              seller: { id: string; name: string; reviews?: any[] }
+              reviews: any[]
+            }
+          >
+        }>(`/store/orders`, {
+          method: "GET",
+          query: {
+            limit,
+            offset,
+            order: "-created_at",
+            fields:
+              "*items,+items.metadata,*items.variant,*items.product,*seller,*reviews,*order_set",
+            ...filters,
+          },
+          headers,
+          next,
+          cache: "no-cache",
+        })
+        .then(({ orders }) => orders)
+        .catch((err) => medusaError(err)),
+    dummyData.orders as any
+  )
 }
 
 export const createTransferRequest = async (
@@ -194,14 +208,18 @@ export const declineTransferRequest = async (id: string, token: string) => {
 export const retrieveReturnReasons = async () => {
   const headers = await getAuthHeaders()
 
-  return sdk.client
-    .fetch<{
-      return_reasons: Array<HttpTypes.StoreReturnReason>
-    }>(`/store/return-reasons`, {
-      method: "GET",
-      headers,
-      cache: "force-cache",
-    })
-    .then(({ return_reasons }) => return_reasons)
-    .catch((err) => medusaError(err))
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{
+          return_reasons: Array<HttpTypes.StoreReturnReason>
+        }>(`/store/return-reasons`, {
+          method: "GET",
+          headers,
+          cache: "force-cache",
+        })
+        .then(({ return_reasons }) => return_reasons)
+        .catch((err) => medusaError(err)),
+    dummyData.returnReasons as any
+  )
 }

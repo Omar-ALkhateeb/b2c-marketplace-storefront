@@ -3,6 +3,8 @@ import { revalidatePath } from "next/cache"
 import { sdk } from "../config"
 import { getAuthHeaders } from "./cookies"
 import { HttpTypes } from "@medusajs/types"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export type Review = {
   id: string
@@ -27,13 +29,18 @@ const getReviews = async () => {
     ...(await getAuthHeaders()),
   }
 
-  const reviews = await sdk.client.fetch("/store/reviews", {
-    headers,
-    query: { fields: "*seller,+customer.id,+order_id" },
-    method: "GET",
-  })
+  return withDummyData(
+    async () => {
+      const reviews = await sdk.client.fetch("/store/reviews", {
+        headers,
+        query: { fields: "*seller,+customer.id,+order_id" },
+        method: "GET",
+      })
 
-  return reviews as { reviews: Review[] }
+      return reviews as { reviews: Review[] }
+    },
+    { reviews: dummyData.reviews as any }
+  )
 }
 
 const createReview = async (review: any) => {

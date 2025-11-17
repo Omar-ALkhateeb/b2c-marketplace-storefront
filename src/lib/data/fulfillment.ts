@@ -4,6 +4,8 @@ import { sdk } from "@/lib/config"
 import { HttpTypes } from "@medusajs/types"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { StoreCardShippingMethod } from "@/components/sections/CartShippingMethodsSection/CartShippingMethodsSection"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const listCartShippingMethods = async (
   cartId: string,
@@ -17,25 +19,29 @@ export const listCartShippingMethods = async (
     ...(await getCacheOptions("fulfillment")),
   }
 
-  return sdk.client
-    .fetch<{ shipping_options: StoreCardShippingMethod[] | null }>(
-      `/store/shipping-options`,
-      {
-        method: "GET",
-        query: {
-          cart_id: cartId,
-          fields:
-            "+service_zone.fulfllment_set.type,*service_zone.fulfillment_set.location.address",
-        },
-        headers,
-        next,
-        cache: "no-cache",
-      }
-    )
-    .then(({ shipping_options }) => shipping_options)
-    .catch(() => {
-      return null
-    })
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{ shipping_options: StoreCardShippingMethod[] | null }>(
+          `/store/shipping-options`,
+          {
+            method: "GET",
+            query: {
+              cart_id: cartId,
+              fields:
+                "+service_zone.fulfllment_set.type,*service_zone.fulfillment_set.location.address",
+            },
+            headers,
+            next,
+            cache: "no-cache",
+          }
+        )
+        .then(({ shipping_options }) => shipping_options)
+        .catch(() => {
+          return null
+        }),
+    dummyData.shippingOptions as any
+  )
 }
 
 export const calculatePriceForShippingOption = async (

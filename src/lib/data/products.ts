@@ -7,6 +7,8 @@ import { SortOptions } from "@/types/product"
 import { getAuthHeaders } from "./cookies"
 import { getRegion, retrieveRegion } from "./regions"
 import { SellerProps } from "@/types/seller"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const listProducts = async ({
   pageParam = 1,
@@ -62,29 +64,31 @@ export const listProducts = async ({
 
   const useCached = limit <= 8 && !category_id && !collection_id
 
-  return sdk.client
-    .fetch<{
-      products: (HttpTypes.StoreProduct & { seller?: SellerProps })[]
-      count: number
-    }>(`/store/products`, {
-      method: "GET",
-      query: {
-        country_code: countryCode,
-        category_id,
-        collection_id,
-        limit,
-        offset,
-        region_id: region?.id,
-        fields:
-          "*variants.calculated_price,+variants.inventory_quantity,*seller,*variants,*seller.products," +
-          "*seller.reviews,*seller.reviews.customer,*seller.reviews.seller,*seller.products.variants,*attribute_values,*attribute_values.attribute",
-        ...queryParams,
-      },
-      headers,
-      next: useCached ? { revalidate: 60 } : undefined,
-      cache: useCached ? "force-cache" : "no-cache",
-    })
-    .then(({ products: productsRaw, count }) => {
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{
+          products: (HttpTypes.StoreProduct & { seller?: SellerProps })[]
+          count: number
+        }>(`/store/products`, {
+          method: "GET",
+          query: {
+            country_code: countryCode,
+            category_id,
+            collection_id,
+            limit,
+            offset,
+            region_id: region?.id,
+            fields:
+              "*variants.calculated_price,+variants.inventory_quantity,*seller,*variants,*seller.products," +
+              "*seller.reviews,*seller.reviews.customer,*seller.reviews.seller,*seller.products.variants,*attribute_values,*attribute_values.attribute",
+            ...queryParams,
+          },
+          headers,
+          next: useCached ? { revalidate: 60 } : undefined,
+          cache: useCached ? "force-cache" : "no-cache",
+        })
+        .then(({ products: productsRaw, count }) => {
       const products = productsRaw.filter(
         (product) => product.seller?.store_status !== "SUSPENDED"
       )
@@ -143,7 +147,13 @@ export const listProducts = async ({
         nextPage: nextPage,
         queryParams,
       }
-    })
+    }),
+    {
+      response: dummyData.products,
+      nextPage: null,
+      queryParams,
+    }
+  )
 }
 
 /**

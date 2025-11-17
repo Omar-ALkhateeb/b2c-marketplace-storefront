@@ -4,6 +4,8 @@ import { sdk } from "../config"
 import medusaError from "@/lib/helpers/medusa-error"
 import { HttpTypes } from "@medusajs/types"
 import { getCacheOptions } from "./cookies"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const listRegions = async () => {
   const next = {
@@ -11,14 +13,18 @@ export const listRegions = async () => {
     revalidate: 3600,
   }
 
-  return sdk.client
-    .fetch<{ regions: HttpTypes.StoreRegion[] }>(`/store/regions`, {
-      method: "GET",
-      next,
-      cache: "force-cache",
-    })
-    .then(({ regions }) => regions)
-    .catch(medusaError)
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{ regions: HttpTypes.StoreRegion[] }>(`/store/regions`, {
+          method: "GET",
+          next,
+          cache: "force-cache",
+        })
+        .then(({ regions }) => regions)
+        .catch(medusaError),
+    dummyData.regions as any
+  )
 }
 
 export const retrieveRegion = async (id: string) => {
@@ -27,14 +33,18 @@ export const retrieveRegion = async (id: string) => {
     revalidate: 3600,
   }
 
-  return sdk.client
-    .fetch<{ region: HttpTypes.StoreRegion }>(`/store/regions/${id}`, {
-      method: "GET",
-      next,
-      cache: "force-cache",
-    })
-    .then(({ region }) => region)
-    .catch(medusaError)
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<{ region: HttpTypes.StoreRegion }>(`/store/regions/${id}`, {
+          method: "GET",
+          next,
+          cache: "force-cache",
+        })
+        .then(({ region }) => region)
+        .catch(medusaError),
+    dummyData.regions[0] as any
+  )
 }
 
 const regionMap = new Map<string, HttpTypes.StoreRegion>()

@@ -3,6 +3,8 @@
 import { sdk } from "../config"
 import { getAuthHeaders, getCacheOptions } from "./cookies"
 import { HttpTypes } from "@medusajs/types"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 export const listCartPaymentMethods = async (regionId: string) => {
   const headers = {
@@ -13,23 +15,27 @@ export const listCartPaymentMethods = async (regionId: string) => {
     ...(await getCacheOptions("payment_providers")),
   }
 
-  return sdk.client
-    .fetch<HttpTypes.StorePaymentProviderListResponse>(
-      `/store/payment-providers`,
-      {
-        method: "GET",
-        query: { region_id: regionId },
-        headers,
-        next,
-        cache: "force-cache",
-      }
-    )
-    .then(({ payment_providers }) =>
-      payment_providers.sort((a, b) => {
-        return a.id > b.id ? 1 : -1
-      })
-    )
-    .catch(() => {
-      return null
-    })
+  return withDummyData(
+    () =>
+      sdk.client
+        .fetch<HttpTypes.StorePaymentProviderListResponse>(
+          `/store/payment-providers`,
+          {
+            method: "GET",
+            query: { region_id: regionId },
+            headers,
+            next,
+            cache: "force-cache",
+          }
+        )
+        .then(({ payment_providers }) =>
+          payment_providers.sort((a, b) => {
+            return a.id > b.id ? 1 : -1
+          })
+        )
+        .catch(() => {
+          return null
+        }),
+    dummyData.paymentProviders as any
+  )
 }

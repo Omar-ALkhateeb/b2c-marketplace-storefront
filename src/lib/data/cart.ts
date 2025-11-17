@@ -14,6 +14,8 @@ import {
   setCartId,
 } from "./cookies"
 import { getRegion } from "./regions"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 /**
  * Retrieves a cart by its ID. If no ID is provided, it will use the cart ID from the cookies.
@@ -31,20 +33,24 @@ export async function retrieveCart(cartId?: string) {
     ...(await getAuthHeaders()),
   }
 
-  return await sdk.client
-    .fetch<HttpTypes.StoreCartResponse>(`/store/carts/${id}`, {
-      method: "GET",
-      query: {
-        fields:
-          "*items,*region, *items.product, *items.variant, *items.variant.options, items.variant.options.option.title," +
-          "*items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *items.product.seller" +
-          "",
-      },
-      headers,
-      cache: "no-cache",
-    })
-    .then(({ cart }) => cart)
-    .catch(() => null)
+  return await withDummyData(
+    () =>
+      sdk.client
+        .fetch<HttpTypes.StoreCartResponse>(`/store/carts/${id}`, {
+          method: "GET",
+          query: {
+            fields:
+              "*items,*region, *items.product, *items.variant, *items.variant.options, items.variant.options.option.title," +
+              "*items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *items.product.seller" +
+              "",
+          },
+          headers,
+          cache: "no-cache",
+        })
+        .then(({ cart }) => cart)
+        .catch(() => null),
+    dummyData.cart as any
+  )
 }
 
 export async function getOrSetCart(countryCode: string) {
@@ -463,12 +469,16 @@ export async function listCartOptions() {
     ...(await getCacheOptions("shippingOptions")),
   }
 
-  return await sdk.client.fetch<{
-    shipping_options: HttpTypes.StoreCartShippingOption[]
-  }>("/store/shipping-options", {
-    query: { cart_id: cartId },
-    next,
-    headers,
-    cache: "force-cache",
-  })
+  return await withDummyData(
+    () =>
+      sdk.client.fetch<{
+        shipping_options: HttpTypes.StoreCartShippingOption[]
+      }>("/store/shipping-options", {
+        query: { cart_id: cartId },
+        next,
+        headers,
+        cache: "force-cache",
+      }),
+    { shipping_options: dummyData.shippingOptions as any }
+  )
 }

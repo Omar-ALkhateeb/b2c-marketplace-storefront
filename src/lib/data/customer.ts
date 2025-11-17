@@ -13,6 +13,8 @@ import {
   removeCartId,
   setAuthToken,
 } from "./cookies"
+import { withDummyData } from "./use-dummy"
+import { dummyData } from "./dummy-data"
 
 // Original version - commented out due to timeout issues
 // export const retrieveCustomer =
@@ -58,29 +60,31 @@ export const retrieveCustomer =
       ...(await getCacheOptions("customers")),
     }
 
-    try {
-      // Add a timeout to prevent indefinite hanging
-      const timeoutPromise = new Promise<null>((_, reject) =>
-        setTimeout(() => reject(new Error('Request timeout')), 5000)
-      )
+    return await withDummyData(async () => {
+      try {
+        // Add a timeout to prevent indefinite hanging
+        const timeoutPromise = new Promise<null>((_, reject) =>
+          setTimeout(() => reject(new Error('Request timeout')), 5000)
+        )
 
-      const fetchPromise = sdk.client
-        .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
-          method: "GET",
-          query: {
-            fields: "*orders",
-          },
-          headers,
-          next,
-          cache: "no-store", // Changed from force-cache to avoid caching failures
-        })
-        .then(({ customer }) => customer)
+        const fetchPromise = sdk.client
+          .fetch<{ customer: HttpTypes.StoreCustomer }>(`/store/customers/me`, {
+            method: "GET",
+            query: {
+              fields: "*orders",
+            },
+            headers,
+            next,
+            cache: "no-store", // Changed from force-cache to avoid caching failures
+          })
+          .then(({ customer }) => customer)
 
-      return await Promise.race([fetchPromise, timeoutPromise])
-    } catch (error) {
-      console.warn('Failed to retrieve customer, continuing without user session:', error)
-      return null
-    }
+        return await Promise.race([fetchPromise, timeoutPromise])
+      } catch (error) {
+        console.warn('Failed to retrieve customer, continuing without user session:', error)
+        return null
+      }
+    }, dummyData.customer as any)
   }
 
 export const updateCustomer = async (body: HttpTypes.StoreUpdateCustomer) => {
