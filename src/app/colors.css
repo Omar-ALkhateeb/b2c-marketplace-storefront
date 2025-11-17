@@ -14,6 +14,9 @@
     --neutral-900: 22, 22, 22;
     --neutral-1000: 9, 9, 9;
 
+    /* Main black - custom color */
+    --black: 243, 245, 245;
+
     /* Brand colors are used across all interactive elements such as buttons, links, inputs, etc. This color can define the overall feel and can elicit emotion. */
     --brand-25: 248, 254, 250;
     --brand-50: 240, 253, 244;
@@ -90,6 +93,7 @@
     --bg-primary: var(--neutral-0);
     --bg-secondary: var(--neutral-25);
     --bg-tertiary: var(--neutral-1000);
+    
 
     --bg-component-primary: var(--neutral-0);
     --bg-component-primary-hover: var(--neutral-25);

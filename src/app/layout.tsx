@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
-import { Funnel_Display } from "next/font/google"
+import { Noto_Kufi_Arabic } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@medusajs/ui"
 import Head from "next/head"
 
-const funnelDisplay = Funnel_Display({
-  variable: "--font-funnel-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+const notoKufiArabic = Noto_Kufi_Arabic({
+  variable: "--font-noto-kufi-arabic",
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
@@ -115,7 +115,7 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://api.mercurjs.com" />
       </Head>
       <body
-        className={`${funnelDisplay.className} antialiased bg-primary text-secondary relative`}
+        className={`${notoKufiArabic.className} antialiased bg-primary text-secondary relative`}
       >
         {children}
         <Toaster position="top-right" />

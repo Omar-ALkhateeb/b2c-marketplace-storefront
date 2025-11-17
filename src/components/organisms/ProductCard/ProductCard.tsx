@@ -28,7 +28,7 @@ export const ProductCard = ({
   return (
     <div
       className={clsx(
-        "relative group border border-neutral-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+        "relative group  transition-all duration-200 flex flex-col justify-between bg-[#F9F9F9] rounded-xl"
       )}
     >
       <div className="relative w-full h-full  aspect-square rounded-lg overflow-hidden">
@@ -37,7 +37,7 @@ export const ProductCard = ({
           aria-label={`View ${productName}`}
           title={`View ${productName}`}
         >
-          <div className="overflow-hidden p-2 rounded-sm w-full h-full flex justify-center align-center ">
+          <div className="overflow-hidden  w-full h-full flex justify-center align-center ">
             {product.thumbnail ? (
               <Image
                 priority
@@ -68,7 +68,8 @@ export const ProductCard = ({
           aria-label={`See more about ${productName}`}
           title={`See more about ${productName}`}
         >
-          <Button className="absolute rounded-lg bg-kiddo-accent hover:bg-kiddo-dark text-white h-auto lg:h-[48px] lg:group-hover:block hidden w-full uppercase bottom-2 z-10 font-medium">
+          <Button className="absolute rounded-lg bg-kiddo-accent hover:bg-kiddo-dark text-white h-auto lg:h-[48px] lg:group-hover:block hidden w-full 
+          uppercase bottom-2 z-10 font-medium">
             See More
           </Button>
         </LocalizedClientLink>
@@ -78,11 +79,11 @@ export const ProductCard = ({
         aria-label={`Go to ${productName} page`}
         title={`Go to ${productName} page`}
       >
-        <div className="flex justify-between p-2 bg-gray-100 rounded-b-lg">
+        <div className="flex justify-between p-2 ">
           <div className="w-full">
             <h3 className="text-xs truncate text-primary font-medium mb-1">{product.title}</h3>
             <div className="flex items-center gap-2">
-              <p className="font-bold text-primary text-sm">{cheapestPrice?.calculated_price}</p>
+              <p className="font-bold text-black text-sm">{cheapestPrice?.calculated_price}</p>
               {cheapestPrice?.calculated_price !==
                 cheapestPrice?.original_price && (
                 <p className="text-xs text-secondary line-through">
